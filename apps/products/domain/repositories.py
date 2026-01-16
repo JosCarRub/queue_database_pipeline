@@ -11,3 +11,7 @@ class ProductRepository(ABC):
     @abstractmethod
     def get_by_id(self, product_id: uuid.UUID) ->Optional[Product]:
         pass
+
+    @abstractmethod
+    def get_by_name(self, name: str) -> Optional[Product]:
+        pass

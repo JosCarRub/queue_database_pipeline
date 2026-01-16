@@ -9,3 +9,7 @@ class InvalidProductError(DomainError):
 class NotEnoughStockError(DomainError):
     """Excepción lanzada cuando no hay suficiente stock para una operación."""
     pass
+
+class DuplicateProductError(DomainError):
+    """Excepción lanzada cuando se intenta crear un producto ya existente en database"""
+    pass
