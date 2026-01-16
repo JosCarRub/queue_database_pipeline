@@ -17,14 +17,14 @@ class Product:
         self.price = price
         self.stock = stock
 
-    def reduce_stock(self, quantity: int):
+    def reduce_stock(self, quantity: int) -> None:
         if quantity <= 0:
             raise InvalidProductError("La cantidad a reducir debe ser positiva.") 
         if self.stock < quantity:
             raise NotEnoughStockError("No hay suficiente stock para reducir.") 
         self.stock -= quantity
 
-    def change_price(self, new_price: Decimal):
+    def change_price(self, new_price: Decimal) -> None:
         if new_price < Decimal('0.00'):
             raise InvalidProductError("El nuevo precio no puede ser negativo.")
         self.price = new_price
