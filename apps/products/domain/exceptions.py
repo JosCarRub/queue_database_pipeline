@@ -13,3 +13,7 @@ class NotEnoughStockError(DomainError):
 class DuplicateProductError(DomainError):
     """Excepción lanzada cuando se intenta crear un producto ya existente en database"""
     pass
+
+class ProductNotFoundError(DomainError):
+    """Excepción lanzada cuando no se encuentra un producto en database"""
+    pass
