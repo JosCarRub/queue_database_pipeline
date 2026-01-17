@@ -1,5 +1,3 @@
-# Contenido para el fichero .gitignore
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -75,5 +73,8 @@ venv.bak/
 # IDE specific files
 .idea/
 .vscode/
+.vscode/*
+vscode/settings.json
+
 *.swp
 .DS_STORE
