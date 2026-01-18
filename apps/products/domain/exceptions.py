@@ -3,7 +3,7 @@ class DomainError(Exception):
     pass
 
 class InvalidProductError(DomainError):
-    """Excepción lanzada cuando se intenta crear un producto inválido."""
+    """Excepción lanzada cuando se intenta crear o modificar un producto con datos inválidos."""
     pass
 
 class NotEnoughStockError(DomainError):
@@ -11,9 +11,13 @@ class NotEnoughStockError(DomainError):
     pass
 
 class DuplicateProductError(DomainError):
-    """Excepción lanzada cuando se intenta crear un producto ya existente en database"""
+    """Excepción lanzada cuando se intenta crear un producto que ya existe (ej. por nombre)."""
     pass
 
 class ProductNotFoundError(DomainError):
-    """Excepción lanzada cuando no se encuentra un producto en database"""
+    """Excepción lanzada cuando no se encuentra un producto por su identificador."""
+    pass
+
+class PublisherError(DomainError):
+    """Excepción lanzada cuando hay un fallo al publicar un mensaje en la cola."""
     pass
