@@ -10,6 +10,16 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "${DB_PORT_HOST}:${DB_PORT}"
+    
+  queue:
+    image: rabbitmq:3.12-management-alpine
+    container_name: pipeline_queue
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+    ports:
+      - "${RABBITMQ_PORT}:${RABBITMQ_PORT}"
+      - "${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}"
 
 volumes:
   postgres_data:
