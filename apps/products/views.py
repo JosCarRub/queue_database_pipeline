@@ -6,6 +6,10 @@ from apps.products.domain.exceptions import PublisherError
 from apps.products.presentation.inyector import Inyector
 from apps.products.presentation.serializers import CreateProductSerializer
 
+import uuid 
+from apps.products.domain.exceptions import ProductNotFoundError
+from apps.products.infrastructure.mappers import ProductMapper
+
 
 class ProductListView(APIView):
     def post(self, request):
@@ -31,3 +35,17 @@ class ProductListView(APIView):
         
         except PublisherError as e:
             return Response({'error': str(e)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+class ProductDetailView(APIView):
+    def get(self, request, product_id: uuid.UUID):
+        try:
+            get_uc = Inyector.get_product_by_id_uc()            
+            product_entity = get_uc.execute(product_id=product_id)
+            
+            #convertir entidad a diccionario
+            response_data = ProductMapper.entity_to_dict(product_entity)
+
+            return Response(response_data, status=status.HTTP_200_OK)
+
+        except ProductNotFoundError as e:
+            return Response({"error": str(e)}, status=status.HTTP_404_NOT_FOUND)

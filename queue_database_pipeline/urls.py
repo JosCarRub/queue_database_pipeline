@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from apps.products.views import ProductDetailView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/products/', include('apps.products.presentation.urls')),
-
+    path('api/v1/products/<uuid:product_id>/', ProductDetailView.as_view(), name='product-detail-debug'),
 ]

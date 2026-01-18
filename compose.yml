@@ -19,7 +19,12 @@ services:
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
     ports:
       - "${RABBITMQ_PORT}:${RABBITMQ_PORT}"
-      - "${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}"
+      - "${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}" 
+  cache:
+    image: redis:7-alpine
+    container_name: pipeline_cache
+    ports:
+        - "${REDIS_PORT}:${REDIS_PORT}"
 
 volumes:
   postgres_data:
