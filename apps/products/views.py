@@ -37,18 +37,10 @@ class ProductListView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
 class ProductDetailView(APIView):
-    def get(self, request, product_id: str):
-        try:
-            product_uuid = uuid.UUID(product_id)
-        except ValueError:
-            return Response(
-                {"error": "El ID del producto no es un UUID válido."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
+    def get(self, request, product_id: uuid.UUID):
         try:
             get_uc = Inyector.get_product_by_id_uc()            
-            product_entity = get_uc.execute(product_id=product_uuid)
+            product_entity = get_uc.execute(product_id=product_id)
             
             #convertir entidad a diccionario
             response_data = ProductMapper.entity_to_dict(product_entity)
