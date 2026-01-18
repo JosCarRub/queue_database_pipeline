@@ -1,10 +1,10 @@
 from typing import Optional
 import uuid
 
-from ..domain.entities import Product as ProductEntity
-from ..domain.repositories import ProductRepository
-from ..models.product import Product as ProductModel
-from .mappers import ProductMapper
+from apps.products.domain.entities import Product as ProductEntity
+from apps.products.domain.repositories import ProductRepository
+from apps.products.models.product import Product as ProductModel
+from apps.products.infrastructure.mappers import ProductMapper
 
 class DjangoProductRepository(ProductRepository):
     def get_by_id(self, product_id: uuid.UUID) -> Optional[ProductEntity]:
@@ -17,9 +17,6 @@ class DjangoProductRepository(ProductRepository):
     def save(self, product: ProductEntity) -> None:
             product_model = ProductMapper.entity_to_model(product)
             product_model.save()
-
-
-
 
     def get_by_name(self, name: str) -> Optional[ProductEntity]:
         try:
