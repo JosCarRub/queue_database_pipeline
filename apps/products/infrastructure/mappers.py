@@ -1,3 +1,5 @@
+from decimal import Decimal
+import uuid
 from apps.products.domain.entities import Product as ProductEntity
 from apps.products.models.product import Product as ProductModel
 
@@ -31,3 +33,23 @@ class ProductMapper:
             product_model.stock = entity.stock
         
         return product_model
+
+    @staticmethod
+    def entity_to_dict(entity: ProductEntity) -> dict:
+        return {
+            'id': str(entity.id),
+            'name': entity.name,
+            'description': entity.description,
+            'price': str(entity.price),
+            'stock': entity.stock
+        }
+
+    @staticmethod
+    def dict_to_entity(data: dict) -> ProductEntity:
+        return ProductEntity(
+            id=uuid.UUID(data['id']),
+            name=data['name'],
+            description=data['description'],
+            price=Decimal(data['price']),
+            stock=data['stock']
+        )
