@@ -4,6 +4,7 @@ from apps.products.application.use_cases.request_product_creation import Request
 from apps.products.domain.publishers import ProductPublisher
 from apps.products.domain.repositories import ProductRepository
 
+from apps.products.infrastructure.cached_repositories import CachedProductRepository
 from apps.products.infrastructure.django_repositories import DjangoProductRepository
 
 from apps.products.application.use_cases.create_product import CreateProduct
@@ -19,7 +20,11 @@ class Inyector:
 
     @staticmethod
     def _get_product_repository()-> ProductRepository:
-        return DjangoProductRepository()
+        base_repository = DjangoProductRepository()
+        cached_repository = CachedProductRepository(decorated_repository=base_repository)
+
+        return cached_repository
+
     
     @staticmethod
     def _get_product_publisher() -> ProductPublisher:
