@@ -12,7 +12,8 @@ class PikaProductPublisher(ProductPublisher):
     """
     def __init__(self):
 
-        host = config('RABBITMQ_HOST', default='localhost')
+        if config('RUNNING_LOCALLY', default=False, cast=bool):
+            host = config('RABBITMQ_HOST_LOCAL', default='localhost')
         port = config('RABBITMQ_PORT', default=5672, cast=int)
         user = config('RABBITMQ_USER', default='guest')
         password = config('RABBITMQ_PASS', default='guest')

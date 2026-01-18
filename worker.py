@@ -18,7 +18,7 @@ def callback(ch, method, properties, body):
     procesa un mensaje recibido de la cola.
     ch: el canal
     method: información sobre la entrega del mensaje
-    properties: propiedades del mensaje
+    properties: propiedades del mensaje (metadata)
     body: el contenido del mensaje (en bytes)
     """
     print(f" [x] Mensaje recibido: {body.decode()}")
@@ -39,7 +39,7 @@ def callback(ch, method, properties, body):
             price=Decimal(message_data['price'])
         )
         
-        # Si todo va bien, enviamos el "acknowledgement" (ack).
+        # Si todo va bien, enviamos el ack
         # RabbitMQ borrará el mensaje de la cola.
         ch.basic_ack(delivery_tag=method.delivery_tag)
         print(" [x] Mensaje procesado y confirmado (ack).")
@@ -59,11 +59,22 @@ def main():
     setup_django()    
     from decouple import config
 
-    host = config('RABBITMQ_HOST', default='localhost')
+    host = config('RABBITMQ_HOST_LOCAL', default='localhost')
+    port = config('RABBITMQ_PORT', default=5672, cast=int)
+    user = config('RABBITMQ_USER', default='guest')
+    password = config('RABBITMQ_PASS', default='guest')
     # Bucle de reconexión.
     while True:
         try:
-            connection = pika.BlockingConnection(pika.ConnectionParameters(host=host))
+            credentials = pika.PlainCredentials(user, password)
+
+            parameters = pika.ConnectionParameters(
+                host=host,
+                port=port,
+                credentials=credentials
+            )
+
+            connection = pika.BlockingConnection(parameters)
             channel = connection.channel()
 
             channel.queue_declare(queue='product_creation_queue', durable=True)
