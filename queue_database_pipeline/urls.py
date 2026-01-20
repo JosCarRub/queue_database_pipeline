@@ -23,4 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/products/', include('apps.products.presentation.urls')),
     path('api/v1/products/<uuid:product_id>/', ProductDetailView.as_view(), name='product-detail-debug'),
+
+    path('', include('django_prometheus.urls')),
 ]
