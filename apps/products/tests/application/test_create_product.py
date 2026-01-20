@@ -1,5 +1,3 @@
-# tests/application/test_create_product.py
-
 from decimal import Decimal
 import uuid
 import pytest
@@ -7,7 +5,7 @@ from apps.products.application.use_cases.check_product_exist_by_name import Chec
 from apps.products.domain.entities import Product
 from apps.products.domain.exceptions import DuplicateProductError
 from apps.products.tests.mocks import InMemoryProductRepository
-from ...application.use_cases.create_product import CreateProduct
+from apps.products.application.use_cases.create_product import CreateProduct
 
 def test_create_product_successfully():
     repository = InMemoryProductRepository()

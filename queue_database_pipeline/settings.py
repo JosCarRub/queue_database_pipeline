@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import sys
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,6 +87,13 @@ DATABASES = {
         'PORT': config('DB_PORT_HOST', default=5432, cast=int),
     }
 }
+
+# si estamos testeando se usa un database en memoria
+if 'test' in sys.argv or 'pytest' in sys.argv[0]:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:', 
+    }
 
 
 # Password validation
