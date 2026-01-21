@@ -1,0 +1,16 @@
+[project]
+name = "pipeline-control-cli"
+version = "0.1.0"
+dependencies = [
+    "typer[all]",
+    "httpx",
+    "python-decouple",
+    "textual",
+]
+
+[project.scripts]
+ctl = "ctl.main:app"
+
+[tool.setuptools]
+packages = ["ctl"]
+package-dir = {"" = "src"}

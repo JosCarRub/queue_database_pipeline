@@ -80,3 +80,10 @@ vscode/settings.json
 
 *.swp
 .DS_STORE
+
+
+# CLI specific artifacts
+cli/venv-cli/
+cli/venv-cli/*
+cli/.env
+cli/src/*.egg-info/
